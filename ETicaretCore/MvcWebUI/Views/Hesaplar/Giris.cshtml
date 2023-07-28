@@ -1,0 +1,32 @@
+﻿@model KullaniciGirisModel
+
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Giriş</h3>
+                    <p>Kullanıcı Adı ile Şifrenizi Giriniz...</p>
+                    <form asp-action="Giris" asp-controller="Hesaplar">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-white"></div>
+                        <div class="col-md-12">
+                            <input asp-for="KullaniciAdi" class="form-control" type="text" placeholder="Kullanıcı adınızı giriniz...">
+                        </div>
+                        <div class="col-md-12">
+                            <input asp-for="Sifre" class="form-control" type="password" placeholder="Şifre giriniz...">
+                        </div>
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary">Giriş</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <link href="/css/myform.css" rel="stylesheet" />
+}

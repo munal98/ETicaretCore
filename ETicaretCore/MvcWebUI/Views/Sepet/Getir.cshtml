@@ -1,0 +1,54 @@
+﻿@using System.Globalization
+
+@model IEnumerable<SepetGroupByModel>
+
+@{
+    ViewData["Title"] = "Sepet";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Temizle" asp-controller="Sepet"> Temizle</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UrunAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirimFiyatToplami)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToplamUrunSayisi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrunAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirimFiyatToplami)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToplamUrunSayisi)
+            </td>
+            <td>
+                <a asp-action="Sil" asp-route-urunId="@item.UrunId" asp-route-kullaniciId="@item.KullaniciId"> Sil</a>
+            </td>
+        </tr>
+}
+<tr>
+    <td>Toplam Fiyat: </td>
+    <td colspan="3">
+        @Model.Sum(m => m.BirimFiyatToplami).ToString("C2", new CultureInfo("tr-TR"))
+    </td>
+</tr>
+    </tbody>
+</table>

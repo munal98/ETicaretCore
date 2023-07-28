@@ -1,0 +1,171 @@
+﻿@model UrunRaporuAjaxIndexViewModel
+
+@if (Model.Urunler != null && Model.Urunler.Count > 0)
+{
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-1">
+            <select asp-for="Sayfa.PageNumber" asp-items="Model.Sayfalar" class="form-control" id="pagenumber"></select>
+        </div>
+    </div>
+    <p class="bg-primary text-white">
+        @Model.Sayfa.RecordsCount kayıt bulundu
+    </p>
+    <input asp-for="Sira.Expression" type="hidden" id="orderbyexpressioninput" />
+    <input asp-for="Sira.DirectionAscending" type="hidden" id="orderbydirectioninput"/>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().UrunAdi)*@
+                    @{
+                        string urunAdiDisplayName = Html.DisplayNameFor(model => model.Urunler.
+                    FirstOrDefault().UrunAdi);
+                    }
+                    <a href="#" class="orderbyexpressionlink">@urunAdiDisplayName</a> 
+                    &nbsp;
+                    @if (!string.IsNullOrWhiteSpace(Model.Sira.Expression) && Model.Sira.Expression == urunAdiDisplayName)
+                    {
+                        if (Model.Sira.DirectionAscending)
+                        {
+                            <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                        }
+                        else
+                        {
+                             <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                        }
+                    }
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().KategoriAdi)
+*@
+                    @{
+                        string kategoriAdiDisplayName = Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().KategoriAdi);
+                    }
+                    <a href="#" class="orderbyexpressionlink">@kategoriAdiDisplayName</a>
+                     &nbsp;
+                    @if (!string.IsNullOrWhiteSpace(Model.Sira.Expression) && Model.Sira.Expression == kategoriAdiDisplayName)
+                    {
+                        if (Model.Sira.DirectionAscending)
+                        {
+                            <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                        }
+                        else
+                        {
+                             <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                        }
+                    }
+                </th>
+                
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().BirimFiyatiModel)*@
+                     @{
+                        string birimFiyatiDisplayName = Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().BirimFiyatiModel);
+                    }
+                    <a href="#" class="orderbyexpressionlink">@birimFiyatiDisplayName</a>
+                    &nbsp;
+                    @if (!string.IsNullOrWhiteSpace(Model.Sira.Expression) && Model.Sira.Expression == birimFiyatiDisplayName)
+                    {
+                        if (Model.Sira.DirectionAscending)
+                        {
+                            <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                        }
+                        else
+                        {
+                             <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                        }
+                    }
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().StokMiktari)*@
+                     @{
+                        string stokMiktariDisplayName = Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().StokMiktari);
+                    }
+                    <a href="#" class="orderbyexpressionlink">@stokMiktariDisplayName</a>
+                     &nbsp;
+                    @if (!string.IsNullOrWhiteSpace(Model.Sira.Expression) && Model.Sira.Expression == stokMiktariDisplayName)
+                    {
+                        if (Model.Sira.DirectionAscending)
+                        {
+                            <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                        }
+                        else
+                        {
+                             <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                        }
+                    }
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().SonKullanmaTarihiModel)*@
+                    @{
+                        string sonKullanmaTarihiDisplayName = Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().SonKullanmaTarihiModel);
+                    }
+                    <a href="#" class="orderbyexpressionlink">@sonKullanmaTarihiDisplayName</a>
+                     &nbsp;
+                    @if (!string.IsNullOrWhiteSpace(Model.Sira.Expression) && Model.Sira.Expression == sonKullanmaTarihiDisplayName)
+                    {
+                        if (Model.Sira.DirectionAscending)
+                        {
+                            <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                        }
+                        else
+                        {
+                             <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                        }
+                    }
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().CreateDateModel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().UpdateDateModel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().CreatedByModel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().UpdatedByModel)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Urunler)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.UrunAdi)
+                    </td>
+                    <td>
+                        <a href="#" title="@item.KategoriAciklamasi">@Html.DisplayFor(model => item.KategoriAdi)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.BirimFiyatiModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.StokMiktari)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SonKullanmaTarihiModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CreateDateModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.UpdateDateModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CreatedByModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.UpdatedByModel)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="bg-primary text-white">
+        Kayıt bulunamadı
+    </p>
+}

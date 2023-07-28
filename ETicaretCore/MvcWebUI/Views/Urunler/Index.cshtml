@@ -1,0 +1,204 @@
+﻿@using System.Globalization
+
+@*@model IEnumerable<Entities.Entities.Urun>*@
+@*@model IEnumerable<Business.Models.UrunModel>*@ @* ~/Views/_ViewImports.cshtml altına using ile Business.Models eklendikten sonra model IEnumerable<UrunModel> olarak tanımlanabilir. *@
+@model IEnumerable<UrunModel>
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create"><i class="fas fa-plus"></i> Yeni Ürün</a>
+    </p>
+}
+
+@if (TempData["Message"] != null)
+{
+    <p class="bg-primary text-white">
+        @TempData["Message"]
+    </p>
+}
+
+@*<table class="table">*@ @* Datatables kullanabilmek için değiştirmemiz gerekli. *@
+<table id="urunler" class="display">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+
+            @*<th>
+                @Html.DisplayNameFor(model => model.Kategori)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.KategoriModel.Adi)
+            </th>
+
+            @* Bu sayfada göstermemize gerek yok. *@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Aciklamasi)
+                </th>*@
+
+            @*<th>
+                @Html.DisplayNameFor(model => model.BirimFiyati)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.BirimFiyatiModel)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.StokMiktari)
+            </th>
+
+            @*<th>
+                @Html.DisplayNameFor(model => model.SonKullanmaTarihi)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.SonKullanmaTarihiModel)&nbsp;(Yıl-Ay-Gün)
+            </th>
+
+            <th style="width: 15%;">
+                @Html.DisplayNameFor(model => model.ImajDosyaAdi)
+            </th>
+
+            @* Bu sayfada göstermemize gerek yok. *@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Guid)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+                </th>*@
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adi)
+                </td>
+
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Kategori.Adi)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.KategoriModel.Adi)
+                </td>
+
+                @* Bu sayfada göstermemize gerek yok. *@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Aciklamasi)
+                    </td>*@
+
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.BirimFiyati)
+                    </td>*@
+                <td>
+
+                    @*@Html.DisplayFor(modelItem => item.BirimFiyatiModel)&nbsp;₺*@ @* Klavyede Alt Gr + t kısayolu *@
+                    @item.BirimFiyati.ToString("C2", new CultureInfo("tr-TR"))
+
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StokMiktari)
+                </td>
+
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.SonKullanmaTarihi)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.SonKullanmaTarihiModel)
+                </td>
+
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.ImajDosyaAdi))
+                    {
+                        <img src="/files/urunler/@item.ImajDosyaAdi" class="img-thumbnail" />
+                    }
+                </td>
+
+                @* Bu sayfada göstermemize gerek yok. *@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Guid)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedBy)
+                    </td>*@
+
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Kullanıcı"))
+                        {
+                            <a asp-action="Ekle" asp-controller="Sepet" asp-route-urunId="@item.Id">
+                                <i class="fas fa-cart-plus"></i> Sepete Ekle
+                            </a>
+                        }
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-lg fa-info-circle"></i> Detay</a>
+                @:&nbsp;|&nbsp; @*<text>&nbsp;|&nbsp;</text>*@
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-lg fa-pen-square"></i> Düzenle</a>@:&nbsp;|&nbsp;
+
+                            @*<a asp-action="Delete" asp-route-id="@item.Id">Sil</a>*@
+                            <a href="#" onclick="urunSil(@item.Id);"><i class="fas fa-lg fa-trash"></i> Sil</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <link href="/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <link href="/lib/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
+    <script src="/lib/AlertifyJS/alertify.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#urunler').DataTable();
+        });
+
+        function urunSil(id) {
+            alertify.confirm("Uyarı!", "Tıkladığınız ürünü silmek istediğinize emin misiniz?",
+              function(){ // Ok
+                //alertify.success('İşlem tamamlandı.');
+                window.location.href = "/Urunler/Delete/" + id
+              },
+              function(){ // Cancel
+                //alertify.error('İşlemden vazgeçildi.');
+            }).set('labels', { ok: 'Evet', cancel: 'Hayır' });
+        }
+    </script>
+}

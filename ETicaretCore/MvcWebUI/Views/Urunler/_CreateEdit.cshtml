@@ -1,0 +1,136 @@
+﻿@model UrunModel
+
+@*<form asp-action="Create" autocomplete="off" enctype="multipart/form-data">*@@* dosya yükleme işlemleri için mutlaka enctype set edilmelidir! *@
+@*@using (Html.BeginForm())*@
+@using (Html.BeginForm(FormMethod.Post, new { autocomplete = "off", enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row mb-3">
+        <label asp-for="Adi" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="Adi" class="form-control" placeholder="Ürün adı giriniz..."/>
+            <span asp-validation-for="Adi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Aciklamasi" class="col-2 col-form-label"></label>
+        <div class="col-5">
+
+            @*<input asp-for="Aciklamasi" class="form-control" />*@
+            <textarea asp-for="Aciklamasi" class="form-control" rows="5" placeholder="Ürün açıklaması giriniz..."></textarea>
+
+            <span asp-validation-for="Aciklamasi" class="text-danger"></span>
+        </div>
+    </div>
+
+    @*<div class="row mb-3">
+        <label asp-for="BirimFiyati" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="BirimFiyati" class="form-control" />
+            <span asp-validation-for="BirimFiyati" class="text-danger"></span>
+        </div>
+    </div>*@
+    <div class="row mb-3">
+        <label asp-for="BirimFiyatiModel" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="BirimFiyatiModel" class="form-control" placeholder="Birim fiyat giriniz..." />
+            <span asp-validation-for="BirimFiyatiModel" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="StokMiktari" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="StokMiktari" class="form-control" placeholder="Stok miktarı giriniz..." />
+            <span asp-validation-for="StokMiktari" class="text-danger"></span>
+        </div>
+    </div>
+
+    @*<div class="row mb-3">
+        <label asp-for="SonKullanmaTarihi" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="SonKullanmaTarihi" class="form-control" />
+            <span asp-validation-for="SonKullanmaTarihi" class="text-danger"></span>
+        </div>
+    </div>*@
+    <div class="row mb-3">
+        <label asp-for="SonKullanmaTarihiModel" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="SonKullanmaTarihiModel" class="form-control" id="sonkullanmatarihi" placeholder="Son kullanma tarihi giriniz..." />
+            <span asp-validation-for="SonKullanmaTarihiModel" class="text-danger"></span>
+        </div>
+    </div>
+
+    @*<div class="row mb-3">
+        <label asp-for="KategoriId" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <select asp-for="KategoriId" class="form-control" asp-items="ViewBag.KategoriId"></select>
+        </div>
+    </div>*@
+    <div class="row mb-3">
+        <label asp-for="KategoriId" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <select asp-for="KategoriId" class="form-control kategoriler" asp-items="ViewBag.Kategoriler">
+                <option value="">-- Kategori Seçiniz --</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="ImajDosyaAdi" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input type="file" name="imaj" accept="@AppSettings.AcceptedImageExtensions" />
+        </div>
+    </div>
+
+    @* Bu sayfada göstermemize gerek yok. *@
+    @*<div class="row mb-3">
+        <label asp-for="Guid" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="Guid" class="form-control" />
+            <span asp-validation-for="Guid" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CreateDate" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="CreateDate" class="form-control" />
+            <span asp-validation-for="CreateDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CreatedBy" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="CreatedBy" class="form-control" />
+            <span asp-validation-for="CreatedBy" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="UpdateDate" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="UpdateDate" class="form-control" />
+            <span asp-validation-for="UpdateDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="UpdatedBy" class="col-2 col-form-label"></label>
+        <div class="col-5">
+            <input asp-for="UpdatedBy" class="form-control" />
+            <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+        </div>
+    </div>*@
+
+    <div class="row mb-3">
+        <div class="offset-2 col-5">
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+            &nbsp;&nbsp;
+            <button type="reset" class="btn btn-outline-primary">Temizle</button>
+            &nbsp;&nbsp;
+            <a asp-action="Index">Ürünler</a>
+        </div>
+    </div>
+
+@*</form>*@
+}

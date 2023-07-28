@@ -1,0 +1,25 @@
+﻿@model List<KategoriModel>
+
+<h5>Kategoriler</h5>
+<hr />
+
+@if (Model != null && Model.Count > 0)
+{
+    <ul class="navbar-nav ul-categories">
+        <li>
+            <a asp-action="Index" asp-controller="UrunRaporuAjax">-- Tüm Kategoriler --</a>
+        </li>
+    @foreach (var kategori in Model)
+    {
+        <li>
+            <a asp-action="Index" asp-controller="UrunRaporuAjax" asp-route-kategoriId="@kategori.Id">@kategori.Adi</a>
+        </li>
+    }
+    </ul>
+}
+else
+{
+    <p class="text-danger">
+        Kategori bulunamadı
+    </p>
+}

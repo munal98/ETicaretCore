@@ -1,0 +1,112 @@
+﻿@*@model IEnumerable<Entities.Entities.Urun>*@
+@model UrunRaporuAjaxIndexViewModel
+
+@{
+    ViewData["Title"] = "Ürün Raporu";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Index" autocomplete="off" id="form" data-ajax="true" data-ajax-method="post" data-ajax-mode="replacewith" data-ajax-update="#urunraporu">
+    @Html.HiddenFor(m => m.Filtre.KategoriId)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-2">
+            @await Component.InvokeAsync("Kategoriler")
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-2">
+                    @Html.DisplayNameFor(m => m.Filtre.UrunAdi)
+                </div>
+                <div class="col-4">
+                    @Html.TextBoxFor(m => m.Filtre.UrunAdi, new { @class = "form-control"})
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-2">
+                    @Html.DisplayNameFor(m => m.Filtre.BirimFiyatBaslangic)
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Filtre.BirimFiyatBaslangic, new { @class = "form-control" })
+                        <span class="input-group-text">-</span>
+                        @Html.TextBoxFor(m => m.Filtre.BirimFiyatBitis, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-2">
+                    @Html.DisplayNameFor(m => m.Filtre.StokMiktariBaslangic)
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Filtre.StokMiktariBaslangic, new { @class = "form-control" })
+                        <span class="input-group-text">-</span>
+                        @Html.TextBoxFor(m => m.Filtre.StokMiktariBitis, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-2">
+                    @Html.DisplayNameFor(m => m.Filtre.SonKullanmaTarihiBaslangic)
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Filtre.SonKullanmaTarihiBaslangic, new { @class = "form-control tarih" })
+                        <span class="input-group-text">-</span>
+                        @Html.TextBoxFor(m => m.Filtre.SonKullanmaTarihiBitis, new { @class = "form-control tarih" })
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Ara</button>
+                </div>
+            </div>
+            <div id="urunraporu">
+                <partial name="_UrunRaporu" model="@Model"></partial>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+<link rel="stylesheet" href="/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
+<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+	    @* takvimi Türkçe kullanabilmek için eklenmeli. *@
+<script src="/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+
+<script src="/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    //$(document).ready(function(){
+    $(function(){
+        $('.tarih').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            orientation: "bottom auto",
+            format: "dd.mm.yyyy",
+            language: "tr" // takvimi Türkçe kullanabilmek için eklenmeli.
+        });
+        //$("#pagenumber").change(function(){
+        //    $("#form").submit();
+        //});
+        $(document).on("change", "#pagenumber", function(){
+            $("#form").submit();
+        });
+        $(document).on("click", ".orderbyexpressionlink", function(e)
+        {
+            e.preventDefault();
+            $("#orderbyexpressioninput").val($(this).text());
+            var ascending = $("#orderbydirectioninput").val(); // asc için True, desc: False
+            if (ascending == "True")
+                ascending = "False";
+            else
+                ascending = "True";
+            $("#orderbydirectioninput").val(ascending);
+            $("#form").submit();
+        });
+    });
+</script>
+}

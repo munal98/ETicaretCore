@@ -1,0 +1,58 @@
+﻿@*@model Entities.Entities.Urun*@
+@model UrunModel
+
+@{
+    ViewData["Title"] = "Ürün Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Ürün</h4>
+<hr />
+<div class="row">
+    <div class="col-12">
+        
+        <partial name="_CreateEdit" model="Model" />
+
+    </div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<form asp-action="DeleteUrunImaj" id="imajsilform">
+			<input asp-for="Id" type="hidden" />
+			<button type="submit" class="btn btn-danger" id="imajsilbutton">İmajı Sil</button>
+		</form>
+	</div>
+</div>
+
+@section Scripts
+{
+	<partial name="_ValidationScriptsPartial" /> @* client side validation *@
+
+	<link rel="stylesheet" href="/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
+	<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+	@* takvimi Türkçe kullanabilmek için eklenmeli. *@
+	<script src="/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+
+	<link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
+	<script src="/lib/select2/js/select2.min.js"></script>
+
+	@* select2'yi Türkçe kullanabilmek için eklenmeli. *@
+	@*<script src="/lib/select2/js/i18n/tr.min.js"></script>*@
+
+	<script>
+		//$(document).ready(function(){
+		$(function(){
+			$('#sonkullanmatarihi').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "top auto",
+                format: "dd.mm.yyyy",
+				language: "tr" // takvimi Türkçe kullanabilmek için eklenmeli.
+            });
+
+			$(".kategoriler").select2();
+		});
+	</script>
+}

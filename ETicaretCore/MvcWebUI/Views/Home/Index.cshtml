@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="text-left">
+    @*<h1 class="display-4">E-Ticaret</h1>*@
+    <h1 class="display-4">@AppSettings.Baslik</h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>Hoşgeldiniz @User.Identity.Name.</p>
+    }
+    else
+    {
+        <p>Hoşgeldiniz.</p>
+    }
+</div>
